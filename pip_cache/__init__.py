@@ -6,6 +6,7 @@ Github: https://github.com/brunobeltran0
 Description: Keeps a local cache of all available PyPi packages. Fast, local,
 manually updated version of `pip search`.
 """
+from __future__ import print_function
 import os
 import sys
 from .xdg import get_xdg_data_dir
