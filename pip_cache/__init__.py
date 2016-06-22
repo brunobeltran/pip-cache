@@ -2,7 +2,7 @@
 File: pip-cache.py
 Author: Bruno Beltran
 Email: brunobeltran0@email.com
-Github: https://github.com/brunobeltran0
+Github: https://github.com/brunobeltran0/pip-cache
 Description: Keeps a local cache of all available PyPi packages. Fast, local,
 manually updated version of `pip search`.
 """
@@ -13,10 +13,16 @@ from .xdg import get_xdg_data_dir
 import argparse
 
 #TODO speed up by using msgpack to store a marisa-trie for quick prefix lookup
+# I haven't had the need to do this yet, since it's fast enough for autocomplete
+# already
 #import marisa-trie
 #import msgpack
 pip_cache_data_dir = os.path.join(get_xdg_data_dir(), 'pip-cache')
 index_filename = os.path.join(pip_cache_data_dir, 'all-packages.txt')
+
+# make sure that the directory we might be writing in exists
+if not os.path.isdir(pip_cache_data_dir):
+    os.mkdir(pip_cache_data_dir)
 
 def filter_prefix(strings, prefix=''):
     return list(filter(lambda x: x.startswith(prefix), strings))
@@ -88,11 +94,14 @@ def main():
 
     parser_pkgnames = subparsers.add_parser('pkgnames', \
             help='List packages whose names start with a prefix')
-    parser_pkgnames.add_argument('prefix', type=str, help='Optional prefix.', \
+    parser_pkgnames.add_argument('prefix', nargs="?", type=str, help='Optional prefix.', \
             default='')
     parser_pkgnames.set_defaults(func=pkgnames)
     #args = parser.parse_args(['pkgnames', 'test'])
     #args = parser.parse_args(['update'])
+    # if user passes nothing, assume he wants help
+    if len(sys.argv) == 1:
+        sys.argv.append('--help')
     args = parser.parse_args(sys.argv[1:])
     func_args = vars(args)
     func_args = dict(func_args)
