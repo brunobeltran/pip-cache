@@ -14,22 +14,8 @@ from pip_cache.xdg import get_xdg_data_dir
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-# with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-#     long_description = f.read()
-# temporary fix:
-long_description = """
-# pip-cache
-
-A simple script that allows prefix-based searching of a locally cached copy of
-all available PyPi packages, a la `apt-cache pkgnames`. The cache is created and
-updated manually by calling `pip-cache update`, in the spirit of
-`apt-get update`.
-
-The cache is stored in `$XDG_DATA_HOME/pip-cache/all-packages.txt`, where
-`$XDG_DATA_HOME` is usually `~/.local/share` on Linux systems.
-
-Used in [`pip-bash-completion`](https://github.com/brunobeltran/pip-bash-completion).
-"""
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
     name='pip-cache',
@@ -37,7 +23,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.0.5',
+    version='0.0.6',
 
     description='Local PyPi Package Name Cache',
     long_description=long_description,
@@ -116,7 +102,9 @@ setup(
     # need to place data files outside of your packages. See:
     # http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files # noqa
     # In this case, 'data_file' will be installed into '<sys.prefix>/my_data'
-    #data_files=[(path.join(get_xdg_data_dir(), 'pip-cache'), ['./data/all-packages.txt'])],
+    data_files=[
+        (path.join(get_xdg_data_dir(), 'pip-cache'), ['data/all-packages.txt'])
+    ],
 
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow

@@ -1,9 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
-This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.0.6]
 ### Added
+- Fixes misc build problems
+- pkgdata containing pre-downloaded list of pip packages 2016-06-25
+- Fixes MANIFEST.in to include README.md and thus package description
 
 ## [0.0.5] - 2016-06-22
 ### Removed
